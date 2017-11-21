@@ -3,8 +3,8 @@ def modularPow(base, exp, mod):
     while (exp > 0):
         if (exp % 2 == 1):
             result = (result * base) % mod
-            exp = exp >> 1
-            base = (base * base) % mod
+        exp = exp >> 1
+        base = (base * base) % mod
     return result;
 
 def modularExp(base, exp, mult, mod):
@@ -26,6 +26,6 @@ def modulo(n, p):
 def modInverse(n, mod):
     n = modulo(n, mod)
     for x in range(mod):
-        if(modulo(n*x, modulus) == 1):
+        if(modulo(n*x, mod) == 1):
             return x
     return 0
