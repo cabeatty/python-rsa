@@ -19,16 +19,40 @@ q = 59
 
 def encrypt(input):
     input, output = block.st2bv(input), []
-    print(input)
     for i in range(len(input)):
         temp = modmath.modularPow(input[i], exp, mod)
         output.append(temp)
     return output
 
 def decrypt(input):
+    for i in range(len(input)):
+        input[i] = int(input[i])
     dmod, output = (p-1)*(q-1), []
     expInv = modmath.modInverse(exp, dmod)
     for i in range(len(input)):
         temp = modmath.modularPow(input[i], expInv, mod)
         output.append(temp)
+    return output
+
+def fileEncrypt(filename):
+    rd = open(filename, 'r')
+    input = rd.read().replace("\n", "")
+    rd.close()
+    output = encrypt(input)
+    wr = open(filename, 'w')
+    for i in range(len(output)):
+        wr.write( str(output[i]) + " ")
+    wr.close()
+    return output
+
+def fileDecrypt(filename):
+    rd = open(filename, 'r')
+    input = rd.read().strip().split(" ")
+    rd.close()
+    output = decrypt(input)
+    output = block.bv2st(output)
+    wr = open(filename, 'w')
+    for i in range(len(output)):
+        wr.write( str(output[i]) )
+    wr.close()
     return output
